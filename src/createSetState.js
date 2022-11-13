@@ -13,9 +13,11 @@ const cmd = () => {
   const names = activeEditor.document.getText(activeEditor.selection).split('\n')
 
   names.forEach((name, index) => {
-    const capName = name[0].toUpperCase() + name.substring(1)
+    // @ts-ignore - function exists.
+    const fixedName = name.replaceAll(' ', '').replaceAll('\t', '')
+    const capName = fixedName[0].toUpperCase() + fixedName.substring(1)
     
-    replace += setStateText(name, capName)
+    replace += setStateText(fixedName, capName)
     if (index + 1 !== names.length) {
       replace += '\n'
     }
