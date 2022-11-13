@@ -1,8 +1,14 @@
 {
   "name": "react-help-commands",
-  "displayName": "Create react component",
+  "displayName": "React help commands",
   "description": "",
-  "version": "0.0.1",
+  "version": "0.0.2",
+  "author": {
+    "name": "Dejssa"
+  },
+  "repository": {
+    "url": "https://github.com/Dejssa/React-help-commands"
+  },
   "engines": {
     "vscode": "^1.73.0"
   },
@@ -10,38 +16,57 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:react-help-commands.create-template"
+    "onCommand:react-help-commands.create-template",
+    "onCommand:react-help-commands.create-use-state"
   ],
-  "main": "./extension.js",
+  "main": "./src/extension.js",
   "contributes": {
     "commands": [
       {
         "command": "react-help-commands.create-template",
         "title": "Create react component template"
+      },
+      {
+        "command": "react-help-commands.create-use-state",
+        "title": "Create useState"
       }
     ],
     "menus": {
-      "editor/context": [{
+      "editor/context": [
+        {
           "command": "react-help-commands.create-template",
           "title": "Create react component template",
           "group": "React helper"
-      }]
-  }
+        },
+        {
+          "command": "react-help-commands.create-use-state",
+          "title": "Create useState",
+          "group": "React helper"
+        }
+      ]
+    }
   },
   "scripts": {
     "lint": "eslint .",
     "pretest": "npm run lint",
-    "test": "node ./test/runTest.js"
+    "test": "node ./test/runTest.js",
+    "vscode:prepublish": "npm run esbuild-base -- --minify",
+    "esbuild-base": "esbuild ./src/extension.js --bundle --outfile=out/main.js --external:vscode --format=cjs --platform=node",
+    "esbuild": "npm run esbuild-base -- --sourcemap",
+    "esbuild-watch": "npm run esbuild-base -- --sourcemap --watch",
+    "test-compile": "tsc -p ./"
   },
   "devDependencies": {
-    "@types/vscode": "^1.73.0",
     "@types/glob": "^8.0.0",
     "@types/mocha": "^10.0.0",
     "@types/node": "16.x",
+    "@types/vscode": "^1.73.0",
+    "@vscode/test-electron": "^2.2.0",
+    "esbuild": "^0.15.13",
     "eslint": "^8.26.0",
     "glob": "^8.0.3",
     "mocha": "^10.1.0",
     "typescript": "^4.8.4",
-    "@vscode/test-electron": "^2.2.0"
+    "vsce": "^2.14.0"
   }
 }
